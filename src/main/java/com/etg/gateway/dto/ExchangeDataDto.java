@@ -12,15 +12,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExchangeValueDto {
+public class ExchangeDataDto {
 	private boolean success;
 	private String base;
 	private String date;
+	// TODO fix type
 	private BigDecimal timeStamp;
 	private Map<String, Double> rates;
 	private FixerApiErrorDto error;
 
-	public ExchangeValueDto(boolean success, FixerApiErrorDto error) {
+	public ExchangeDataDto(boolean success, FixerApiErrorDto error) {
 		this.success = success;
 		this.error = error;
 	}
