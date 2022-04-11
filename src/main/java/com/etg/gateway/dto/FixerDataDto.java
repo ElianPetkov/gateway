@@ -1,6 +1,5 @@
 package com.etg.gateway.dto;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -12,16 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExchangeDataDto {
-	private boolean success;
-	private String base;
-	private String date;
-	// TODO fix type
-	private BigDecimal timeStamp;
-	private Map<String, Double> rates;
+public class FixerDataDto extends FixerDataBaseDto {
+	Map<String, Double> rates;
+	boolean success;
 	private FixerApiErrorDto error;
 
-	public ExchangeDataDto(boolean success, FixerApiErrorDto error) {
+	public FixerDataDto(boolean success, FixerApiErrorDto error) {
 		this.success = success;
 		this.error = error;
 	}

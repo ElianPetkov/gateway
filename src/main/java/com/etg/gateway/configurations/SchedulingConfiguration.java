@@ -12,7 +12,7 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @Configuration
 public class SchedulingConfiguration implements SchedulingConfigurer {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(SchedulingConfiguration.class);
 	private final ThreadPoolTaskScheduler taskScheduler;
 
 	public SchedulingConfiguration() {
