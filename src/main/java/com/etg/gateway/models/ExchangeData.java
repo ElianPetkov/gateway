@@ -1,6 +1,5 @@
 package com.etg.gateway.models;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,12 +29,12 @@ public class ExchangeData {
 
 	private String base;
 	private LocalDate date;
-	private Timestamp timeStamp;
+	private LocalDateTime dateTime;
 
-	public ExchangeData(String base, LocalDate localDate, LocalDateTime localDateTime) {
+	public ExchangeData(String base, LocalDate date, LocalDateTime dateTime) {
 		this.base = base;
-		this.date = localDate;
-		this.timeStamp = Timestamp.valueOf(localDateTime);
+		this.date = date;
+		this.dateTime = dateTime;
 	}
 
 	@OneToMany(mappedBy = "exchangeData", cascade = CascadeType.ALL)

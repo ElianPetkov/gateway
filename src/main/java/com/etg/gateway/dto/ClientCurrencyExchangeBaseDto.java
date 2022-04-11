@@ -1,10 +1,8 @@
 package com.etg.gateway.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.etg.gateway.configurations.CustomLocalDateTimeDesSerializer;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.AllArgsConstructor;
@@ -16,11 +14,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FixerDataBaseDto {
-	private String base;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDate date;
+public abstract class ClientCurrencyExchangeBaseDto {
+	private Integer client;
+	private String currency;
 	@JsonDeserialize(using = CustomLocalDateTimeDesSerializer.class)
 	private LocalDateTime timestamp;
+	private String requestId;
 
 }
