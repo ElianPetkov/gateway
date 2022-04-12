@@ -1,5 +1,9 @@
 package com.etg.gateway.dto;
 
+import javax.validation.constraints.Pattern;
+
+import com.etg.gateway.common.Constants;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FixerCurrencyRateDto {
+	@Pattern(regexp = Constants.CURRENCY_REGEX, message = Constants.CURRENCY_NOT_SUPPORTED_MESSAGE)
 	private String base;
+
 	private Double rate;
 
 	@Override
