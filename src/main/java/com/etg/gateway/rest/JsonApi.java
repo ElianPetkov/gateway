@@ -2,6 +2,8 @@ package com.etg.gateway.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,13 +24,13 @@ public class JsonApi {
 
 	@RequestMapping(value = "/current", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public CurrencyExchangeResponseDto getCurrentExchangeData(
-			@RequestBody LatestClientCurrencyExchangeDto clientCurrencyExchangeDto) {
+			@RequestBody @Valid LatestClientCurrencyExchangeDto clientCurrencyExchangeDto) {
 		return clientExchangeService.extractLatestCurrencyExchangeInformation(clientCurrencyExchangeDto);
 	}
 
 	@RequestMapping(value = "/history", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<CurrencyExchangeResponseDto> getExchangeDataInPeriod(
-			@RequestBody PeriodClientCurrencyExchangeDto periodCurrencyExchangeDto) {
+			@Valid @RequestBody PeriodClientCurrencyExchangeDto periodCurrencyExchangeDto) {
 		return clientExchangeService.extractCurrencyExchangesByPeriod(periodCurrencyExchangeDto);
 	}
 
