@@ -112,9 +112,6 @@ public class ClientExchangeServiceImplTest {
 
 		Assertions.assertThrows(GateWayExcpetion.class,
 				() -> clientExchangeServiceImpl.extractLatestCurrencyExchangeInformation(LATEST_CURRENCY_DATA_DTO));
-
-		CurrencyExchangeResponseDto expectedResponse = new CurrencyExchangeResponseDto(null, null, null, null);
-
 	}
 
 	@Test
@@ -199,12 +196,9 @@ public class ClientExchangeServiceImplTest {
 
 	@Test
 	public void findLatestExchangeDataByPeriodWithEmptyDtoTest() {
-		List<CurrencyExchangeResponseDto> response = clientExchangeServiceImpl
-				.extractCurrencyExchangesByPeriod(new PeriodClientCurrencyExchangeDto());
+		Assertions.assertThrows(GateWayExcpetion.class, () -> clientExchangeServiceImpl
+				.extractCurrencyExchangesByPeriod(new PeriodClientCurrencyExchangeDto()));
 
-		List<CurrencyExchangeResponseDto> expectedResponse = new ArrayList<>();
-
-		Assertions.assertAll(() -> Assertions.assertTrue(response.equals(expectedResponse)));
 	}
 
 }

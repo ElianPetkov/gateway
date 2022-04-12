@@ -61,7 +61,8 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 		}
 
 		if (exchangeData.size() == 0) {
-			return new ArrayList<CurrencyExchangeResponseDto>();
+			throw new GateWayExcpetion(Constants.NO_RESOURCE_FOUND_MESSAGE + periodCurrencyExchangeDto.getCurrency(),
+					HttpStatus.NOT_FOUND);
 		} else {
 			List<CurrencyExchangeResponseDto> result = new ArrayList<>();
 			for (var data : exchangeData) {
