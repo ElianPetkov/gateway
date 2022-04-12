@@ -40,7 +40,8 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 		List<ExchangeData> exchangeData = findLatesExchangeData(latestCurrencyExchangeDto.getCurrency(), 1);
 
 		if (exchangeData.size() == 0) {
-			return new CurrencyExchangeResponseDto();
+			throw new GateWayExcpetion("No data for currency " + latestCurrencyExchangeDto.getCurrency(),
+					HttpStatus.NOT_FOUND);
 		} else {
 			return CommonUtils.createExchangeResponseDto(exchangeData.get(0));
 		}
@@ -52,8 +53,11 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 		checkForDuplicatedRequestId(periodCurrencyExchangeDto.getRequestId());
 		createAndSaveClientRequest(periodCurrencyExchangeDto);
 
-		List<ExchangeData> exchangeData = findLatesExchangeData(periodCurrencyExchangeDto.getCurrency(),
-				periodCurrencyExchangeDto.getTimestamp().minusHours(periodCurrencyExchangeDto.getPeriod()));
+		List<ExchangeData> exchangeData = new ArrayList<>();
+		if (periodCurrencyExchangeDto.getTimestamp() != null) {
+			exchangeData = findLatesExchangeData(periodCurrencyExchangeDto.getCurrency(),
+					periodCurrencyExchangeDto.getTimestamp().minusHours(periodCurrencyExchangeDto.getPeriod()));
+		}
 
 		if (exchangeData.size() == 0) {
 			return new ArrayList<CurrencyExchangeResponseDto>();

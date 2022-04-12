@@ -37,10 +37,12 @@ public class ExchangeDataServiceImpl implements ExchangeDataService {
 	private List<CurrencyExchangeRate> convertMapRatesToList(Map<String, Double> mapRates, ExchangeData exchangeData) {
 		List<CurrencyExchangeRate> rates = new ArrayList<>();
 
-		mapRates.forEach((currency, currencyRate) -> {
-			CurrencyExchangeRate exchangeRate = new CurrencyExchangeRate(currency, currencyRate, exchangeData);
-			rates.add(exchangeRate);
-		});
+		if (mapRates != null) {
+			mapRates.forEach((currency, currencyRate) -> {
+				CurrencyExchangeRate exchangeRate = new CurrencyExchangeRate(currency, currencyRate, exchangeData);
+				rates.add(exchangeRate);
+			});
+		}
 
 		return rates;
 	}

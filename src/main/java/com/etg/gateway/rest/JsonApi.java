@@ -20,13 +20,13 @@ public class JsonApi {
 	@Autowired
 	private ClientExchangeService clientExchangeService;
 
-	@RequestMapping(value = "/current", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/current", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public CurrencyExchangeResponseDto getCurrentExchangeData(
 			@RequestBody LatestClientCurrencyExchangeDto clientCurrencyExchangeDto) {
 		return clientExchangeService.extractLatestCurrencyExchangeInformation(clientCurrencyExchangeDto);
 	}
 
-	@RequestMapping(value = "/history", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/history", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<CurrencyExchangeResponseDto> getExchangeDataInPeriod(
 			@RequestBody PeriodClientCurrencyExchangeDto periodCurrencyExchangeDto) {
 		return clientExchangeService.extractCurrencyExchangesByPeriod(periodCurrencyExchangeDto);

@@ -14,10 +14,12 @@ public class CommonUtils {
 
 	public static CurrencyExchangeResponseDto createExchangeResponseDto(ExchangeData exchangeData) {
 		List<FixerCurrencyRateDto> rates = new ArrayList<>();
-		exchangeData.getRates().forEach(rate -> {
-			FixerCurrencyRateDto currencyExchange = new FixerCurrencyRateDto(rate.getBase(), rate.getRate());
-			rates.add(currencyExchange);
-		});
+		if (exchangeData.getRates() != null) {
+			exchangeData.getRates().forEach(rate -> {
+				FixerCurrencyRateDto currencyExchange = new FixerCurrencyRateDto(rate.getBase(), rate.getRate());
+				rates.add(currencyExchange);
+			});
+		}
 
 		return new CurrencyExchangeResponseDto(exchangeData.getBase(), exchangeData.getDate(),
 				exchangeData.getDateTime(), rates);
