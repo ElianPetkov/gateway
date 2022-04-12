@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.etg.gateway.common.Constants;
 import com.etg.gateway.dto.GenericErrorDto;
 import com.etg.gateway.exceptions.GateWayExcpetion;
 
@@ -19,17 +20,21 @@ public class ExceptionHandling {
 
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<GenericErrorDto> exception(Exception exception) {
-		logger.error("Unexpected error! ", exception);
-		GenericErrorDto genericErrorDto = new GenericErrorDto("Please contact the service",
-				ZonedDateTime.now(ZoneId.of("Z")));
+		logger.error(Constants.UNEXPECTED_ERROR_MESSAGE, exception);
+
+		GenericErrorDto genericErrorDto = new GenericErrorDto(Constants.CONTACT_SERVICE_MESSAGE,
+				ZonedDateTime.now(ZoneId.of(Constants.UTC)));
+
 		return new ResponseEntity<>(genericErrorDto, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(value = GateWayExcpetion.class)
 	public ResponseEntity<GenericErrorDto> exception(GateWayExcpetion exception) {
 		logger.error("GateWayExcpetion occure ", exception);
+
 		GenericErrorDto genericErrorDto = new GenericErrorDto(exception.getMessage(),
-				ZonedDateTime.now(ZoneId.of("UTC")));
+				ZonedDateTime.now(ZoneId.of(Constants.UTC)));
+
 		return new ResponseEntity<>(genericErrorDto, exception.getCode());
 	}
 

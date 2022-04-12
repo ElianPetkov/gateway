@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
+import com.etg.gateway.common.Constants;
+
 @EnableScheduling
 @Configuration
 public class SchedulingConfiguration implements SchedulingConfigurer {
@@ -17,7 +19,7 @@ public class SchedulingConfiguration implements SchedulingConfigurer {
 
 	public SchedulingConfiguration() {
 		taskScheduler = new ThreadPoolTaskScheduler();
-		taskScheduler.setErrorHandler(e -> logger.error("Exception in @Scheduled task! ", e));
+		taskScheduler.setErrorHandler(e -> logger.error(Constants.SCHEDULED_ERROR_MESSAGE, e));
 		taskScheduler.setThreadNamePrefix("@scheduled-");
 
 		taskScheduler.initialize();

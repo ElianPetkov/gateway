@@ -26,14 +26,13 @@ public class CurrencyExchangeRequest {
 	private Integer client;
 	private String requestId;
 	private LocalDateTime timestamp;
-	private String currency;
+	private String serviceName;
 
-	public CurrencyExchangeRequest(String requestId, Integer client, LocalDateTime dateTime, String currency) {
+	public CurrencyExchangeRequest(String requestId, Integer client, LocalDateTime dateTime, String serviceName) {
 		this.requestId = requestId;
 		this.client = client;
 		this.timestamp = dateTime;
-		;
-		this.currency = currency;
+		this.serviceName = serviceName;
 	}
 
 }

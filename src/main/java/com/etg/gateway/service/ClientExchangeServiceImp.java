@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.etg.gateway.common.CommonUtils;
+import com.etg.gateway.common.Constants;
 import com.etg.gateway.dto.ClientCurrencyExchangeBaseDto;
 import com.etg.gateway.dto.CurrencyExchangeResponseDto;
 import com.etg.gateway.dto.LatestClientCurrencyExchangeDto;
@@ -40,7 +41,7 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 		List<ExchangeData> exchangeData = findLatesExchangeData(latestCurrencyExchangeDto.getCurrency(), 1);
 
 		if (exchangeData.size() == 0) {
-			throw new GateWayExcpetion("No data for currency " + latestCurrencyExchangeDto.getCurrency(),
+			throw new GateWayExcpetion(Constants.NO_RESOURCE_FOUND_MESSAGE + latestCurrencyExchangeDto.getCurrency(),
 					HttpStatus.NOT_FOUND);
 		} else {
 			return CommonUtils.createExchangeResponseDto(exchangeData.get(0));
@@ -80,13 +81,13 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 
 	private void checkForDuplicatedRequestId(String requestId) {
 		currencyExchangeRequestRepository.findRequestByRequestId(requestId).ifPresent(duplicatedRequest -> {
-			throw new GateWayExcpetion("This request has been already excecuted !", HttpStatus.CONFLICT);
+			throw new GateWayExcpetion(Constants.DUPLICATED_REQUEST_MESSAGE, HttpStatus.CONFLICT);
 		});
 	}
 
 	private void createAndSaveClientRequest(ClientCurrencyExchangeBaseDto data) {
 		CurrencyExchangeRequest currencyExchangeRequest = new CurrencyExchangeRequest(data.getRequestId(),
-				data.getClient(), data.getTimestamp(), data.getCurrency());
+				data.getClient(), data.getTimestamp(), Constants.JSON_API);
 		currencyExchangeRequestRepository.saveAndFlush(currencyExchangeRequest);
 	}
 
