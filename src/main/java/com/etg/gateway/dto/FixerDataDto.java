@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FixerDataDto extends FixerCurrencyExchangeBaseDto {
+public class FixerDataDto extends CurrencyExchangeBaseDto {
 	private Map<String, Double> rates;
 	private boolean success;
 	private FixerApiErrorDto error;

@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FixerCurrencyRateDto {
+public class CurrencyRateDto {
 	@Pattern(regexp = Constants.CURRENCY_REGEX, message = Constants.CURRENCY_NOT_SUPPORTED_MESSAGE)
 	private String base;
 
@@ -26,11 +26,11 @@ public class FixerCurrencyRateDto {
 			return true;
 		}
 
-		if (!(o instanceof FixerCurrencyRateDto)) {
+		if (!(o instanceof CurrencyRateDto)) {
 			return false;
 		}
 
-		FixerCurrencyRateDto c = (FixerCurrencyRateDto) o;
+		CurrencyRateDto c = (CurrencyRateDto) o;
 
 		return base.equals(c.base) && Double.compare(rate, c.rate) == 0;
 	}

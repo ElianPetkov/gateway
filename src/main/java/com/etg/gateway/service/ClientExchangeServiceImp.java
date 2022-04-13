@@ -12,10 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.etg.gateway.common.CommonUtils;
 import com.etg.gateway.common.Constants;
-import com.etg.gateway.dto.ClientCurrencyExchangeBaseDto;
 import com.etg.gateway.dto.CurrencyExchangeResponseDto;
-import com.etg.gateway.dto.LatestClientCurrencyExchangeDto;
-import com.etg.gateway.dto.PeriodClientCurrencyExchangeDto;
+import com.etg.gateway.dto.CurrencyExchangeSearchBaseDto;
+import com.etg.gateway.dto.CurrencyExchangeSearchByPeriodDto;
 import com.etg.gateway.exceptions.GateWayExcpetion;
 import com.etg.gateway.models.CurrencyExchangeRequest;
 import com.etg.gateway.models.ExchangeData;
@@ -33,7 +32,7 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 
 	@Override
 	public CurrencyExchangeResponseDto extractLatestCurrencyExchangeInformation(
-			LatestClientCurrencyExchangeDto latestCurrencyExchangeDto) {
+			CurrencyExchangeSearchBaseDto latestCurrencyExchangeDto) {
 
 		checkForDuplicatedRequestId(latestCurrencyExchangeDto.getRequestId());
 		createAndSaveClientRequest(latestCurrencyExchangeDto);
@@ -50,15 +49,14 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 
 	@Override
 	public List<CurrencyExchangeResponseDto> extractCurrencyExchangesByPeriod(
-			PeriodClientCurrencyExchangeDto periodCurrencyExchangeDto) {
+			CurrencyExchangeSearchByPeriodDto periodCurrencyExchangeDto) {
 		checkForDuplicatedRequestId(periodCurrencyExchangeDto.getRequestId());
 		createAndSaveClientRequest(periodCurrencyExchangeDto);
 
 		List<ExchangeData> exchangeData = new ArrayList<>();
-		if (periodCurrencyExchangeDto.getTimestamp() != null) {
-			exchangeData = findLatesExchangeData(periodCurrencyExchangeDto.getCurrency(),
-					periodCurrencyExchangeDto.getTimestamp().minusHours(periodCurrencyExchangeDto.getPeriod()));
-		}
+
+		exchangeData = findLatesExchangeData(periodCurrencyExchangeDto.getCurrency(),
+				CommonUtils.getCurrentTimeInUtc().minusHours(periodCurrencyExchangeDto.getPeriod()));
 
 		if (exchangeData.size() == 0) {
 			throw new GateWayExcpetion(Constants.NO_RESOURCE_FOUND_MESSAGE + periodCurrencyExchangeDto.getCurrency(),
@@ -86,10 +84,10 @@ public class ClientExchangeServiceImp implements ClientExchangeService {
 		});
 	}
 
-	private void createAndSaveClientRequest(ClientCurrencyExchangeBaseDto data) {
+	private void createAndSaveClientRequest(CurrencyExchangeSearchBaseDto data) {
+
 		CurrencyExchangeRequest currencyExchangeRequest = new CurrencyExchangeRequest(data.getRequestId(),
-				data.getClient(), data.getTimestamp(), Constants.JSON_API);
+				data.getClient(), CommonUtils.getCurrentTimeInUtc(), data.getServiceInfo());
 		currencyExchangeRequestRepository.saveAndFlush(currencyExchangeRequest);
 	}
-
 }

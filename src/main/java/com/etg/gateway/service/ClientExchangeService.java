@@ -2,15 +2,15 @@ package com.etg.gateway.service;
 
 import java.util.List;
 
+import com.etg.gateway.dto.CurrencyExchangeSearchBaseDto;
+import com.etg.gateway.dto.CurrencyExchangeSearchByPeriodDto;
 import com.etg.gateway.dto.CurrencyExchangeResponseDto;
-import com.etg.gateway.dto.LatestClientCurrencyExchangeDto;
-import com.etg.gateway.dto.PeriodClientCurrencyExchangeDto;
 
 public interface ClientExchangeService {
 	public CurrencyExchangeResponseDto extractLatestCurrencyExchangeInformation(
-			LatestClientCurrencyExchangeDto latestCurrencyExchangeDto);
+			CurrencyExchangeSearchBaseDto latestCurrencyExchangeDto);
 
 	public List<CurrencyExchangeResponseDto> extractCurrencyExchangesByPeriod(
-			PeriodClientCurrencyExchangeDto periodCurrencyExchangeDto);
+			CurrencyExchangeSearchByPeriodDto periodCurrencyExchangeDto);
 
 }

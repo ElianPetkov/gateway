@@ -1,10 +1,12 @@
 package com.etg.gateway.common;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.etg.gateway.dto.CurrencyExchangeResponseDto;
-import com.etg.gateway.dto.FixerCurrencyRateDto;
+import com.etg.gateway.dto.CurrencyRateDto;
 import com.etg.gateway.models.ExchangeData;
 
 public class CommonUtils {
@@ -13,10 +15,10 @@ public class CommonUtils {
 	};
 
 	public static CurrencyExchangeResponseDto createExchangeResponseDto(ExchangeData exchangeData) {
-		List<FixerCurrencyRateDto> rates = new ArrayList<>();
+		List<CurrencyRateDto> rates = new ArrayList<>();
 		if (exchangeData.getRates() != null) {
 			exchangeData.getRates().forEach(rate -> {
-				FixerCurrencyRateDto currencyExchange = new FixerCurrencyRateDto(rate.getBase(), rate.getRate());
+				CurrencyRateDto currencyExchange = new CurrencyRateDto(rate.getBase(), rate.getRate());
 				rates.add(currencyExchange);
 			});
 		}
@@ -24,5 +26,9 @@ public class CommonUtils {
 		return new CurrencyExchangeResponseDto(exchangeData.getBase(), exchangeData.getDate(),
 				exchangeData.getDateTime(), rates);
 
+	}
+
+	public static LocalDateTime getCurrentTimeInUtc() {
+		return LocalDateTime.now(ZoneOffset.UTC);
 	}
 }

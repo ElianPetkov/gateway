@@ -13,11 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CurrencyExchangeResponseDto extends FixerCurrencyExchangeBaseDto {
-	private List<FixerCurrencyRateDto> rates;
+public class CurrencyExchangeResponseDto extends CurrencyExchangeBaseDto {
+	private List<CurrencyRateDto> rates;
 
 	public CurrencyExchangeResponseDto(String base, LocalDate date, LocalDateTime timestamp,
-			List<FixerCurrencyRateDto> rates) {
+			List<CurrencyRateDto> rates) {
 		super(base, date, timestamp);
 		this.rates = rates;
 	}
